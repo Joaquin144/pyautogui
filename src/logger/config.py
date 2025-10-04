@@ -1,6 +1,7 @@
 import logging
 
 default_formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
+level_formatter = logging.Formatter('%(asctime)s - %(name)s -%(levelname)s - %(message)s')
 
 
 class SingleLevelFilter(logging.Filter):
@@ -9,7 +10,7 @@ class SingleLevelFilter(logging.Filter):
         self.level = level
 
     def filter(self, record):
-        return record.levelno <= self.level
+        return record.levelno == self.level
 
 
 def setup_logger(name: str = 'app') -> logging.Logger:
@@ -31,8 +32,8 @@ def setup_logger(name: str = 'app') -> logging.Logger:
     # debug handler
     debug_handler = logging.FileHandler('./logs/app-debug.log')
     debug_handler.setLevel(logging.DEBUG)
-    debug_handler.setFormatter(default_formatter)
-    debug_handler.addFilter(SingleLevelFilter(logging.DEBUG))
+    debug_handler.setFormatter(level_formatter)
+    # debug_handler.addFilter(SingleLevelFilter(logging.DEBUG)) Allow every level to come in here
 
     # for console logs
     console_handler = logging.StreamHandler()
