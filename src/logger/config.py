@@ -1,25 +1,48 @@
 import logging
 
-default_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-default_level = logging.DEBUG
+default_formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
 
 
-def setup_logger(name) -> logging.Logger:
+class SingleLevelFilter(logging.Filter):
+    def __init__(self, level):
+        super().__init__()
+        self.level = level
+
+    def filter(self, record):
+        return record.levelno <= self.level
+
+
+def setup_logger(name: str = 'app') -> logging.Logger:
     logger = logging.getLogger(name)
-    logger.setLevel(default_level)
+    logger.setLevel(logging.DEBUG)
+
+    # info logs handler
+    info_handler = logging.FileHandler('./logs/app.log')
+    info_handler.setLevel(logging.INFO)
+    info_handler.setFormatter(default_formatter)
+    info_handler.addFilter(SingleLevelFilter(logging.INFO))
+
+    # error logs handler
+    error_handler = logging.FileHandler('./logs/app-error.log')
+    error_handler.setLevel(logging.ERROR)
+    error_handler.setFormatter(default_formatter)
+    error_handler.addFilter(SingleLevelFilter(logging.ERROR))
+
+    # debug handler
+    debug_handler = logging.FileHandler('./logs/app-debug.log')
+    debug_handler.setLevel(logging.DEBUG)
+    debug_handler.setFormatter(default_formatter)
+    debug_handler.addFilter(SingleLevelFilter(logging.DEBUG))
 
     # for console logs
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(default_formatter)
-    console_handler.setLevel(default_level)
-
-    # for file logs
-    file_handler = logging.FileHandler('./logs/app.log', mode='a')
-    file_handler.setFormatter(default_formatter)
-    file_handler.setLevel(default_level)
+    console_handler.setLevel(logging.DEBUG)
 
     if not logger.handlers:
         logger.addHandler(console_handler)
-        logger.addHandler(file_handler)
+        logger.addHandler(info_handler)
+        logger.addHandler(error_handler)
+        logger.addHandler(debug_handler)
 
     return logger
