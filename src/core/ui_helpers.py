@@ -1,3 +1,4 @@
+import time
 from logging import exception
 
 from src.logger.config import setup_logger
@@ -67,3 +68,12 @@ def scroll_until_image_section_disappears(image_path: str, max_scrolls=20):
 
     log.info("Reached the bottom or could not find the 'Image' section.")
     return None
+
+
+def scroll_to_top():
+    log.info("Scrolling to the top...")
+
+    # You can scroll up in small increments or do it in a loop for a more smooth experience
+    for _ in range(10):  # Adjust the number of scrolls if needed
+        pyautogui.scroll(200)  # Positive value scrolls up
+        time.sleep(0.1)  # Small delay to simulate natural scrolling

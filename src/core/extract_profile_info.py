@@ -4,7 +4,7 @@ import time
 import pyautogui
 
 from src.core.extract_text_from_screenshot import extract_text_from_screenshot
-from src.core.ui_helpers import scroll_until_image_section_found, scroll_until_image_section_disappears
+from src.core.ui_helpers import scroll_until_image_section_found, scroll_until_image_section_disappears, scroll_to_top
 from src.logger.config import setup_logger
 
 log = setup_logger(__name__)
@@ -35,6 +35,8 @@ def extract_profile_info(username: str, file_name: str) -> dict:
         if lines and "see more" in lines[-1].strip().lower():
             lines = lines[:-1]
         about = '\n'.join(lines)
+
+    scroll_to_top()
 
     experience = ""
     pyautogui.moveTo(600, 600)
