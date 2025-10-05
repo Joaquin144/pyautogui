@@ -4,3 +4,5 @@
 .env
 /src/temp_screenshots
 /src/data/
+/src/resources/login_sso.png
+/src/resources/login_sso_email.png
