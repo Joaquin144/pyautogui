@@ -2,3 +2,5 @@
 .venv
 /src/logs
 .env
+/src/temp_screenshots
+/src/data/
