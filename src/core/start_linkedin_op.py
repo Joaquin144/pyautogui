@@ -22,8 +22,8 @@ def run_linkedin_op():
     usernames = read_usernames()
     extracted_profile_data = []
 
-    focus_address_bar()
     for username in usernames:
+        focus_address_bar()
         search_url = generate_search_url_for_username(username)
         log.debug(f'searching : {search_url}')
         pyautogui.write(search_url)
