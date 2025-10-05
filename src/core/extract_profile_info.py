@@ -4,6 +4,7 @@ import time
 import pyautogui
 
 from src.core.extract_text_from_screenshot import extract_text_from_screenshot
+from src.core.ui_helpers import scroll_until_image_section_found, scroll_until_image_section_disappears
 from src.logger.config import setup_logger
 
 log = setup_logger(__name__)
@@ -18,28 +19,42 @@ def extract_profile_info(username: str, file_name: str) -> dict:
     screenshot_path = os.path.join(screenshot_dir, file_name)
 
     time.sleep(3)
-    pyautogui.moveTo(600, 600)  # Move to neutral position
-    pyautogui.scroll(-1000)  # Scroll down to load About section
-    time.sleep(2)
+    pyautogui.moveTo(600, 600)
+    about_location = scroll_until_image_section_found("./resources/about.png")  # Scroll down to load the About section
+    about = ""
+    if about_location:
+        # region = (about_location[0] - 100, about_location[1] - 50, about_location[0] + 600, about_location[1] + 250)
+        # left, top, width, height
+        region = (218, 690, 800, 150)
+        screenshot = pyautogui.screenshot(region=region)
+        about_screenshot_path = os.path.join(screenshot_dir, "about_screenshot.png")
+        screenshot.save(about_screenshot_path)
+        extracted_text = extract_text_from_screenshot(about_screenshot_path)
+        lines = extracted_text.split('\n')
+        if lines[0].strip().lower() == "about":
+            lines = lines[1:]
+        if lines and "see more" in lines[-1].strip().lower():
+            lines = lines[:-1]
+        about = '\n'.join(lines)
 
-    screenshot = pyautogui.screenshot()
-    screenshot.save(screenshot_path)
-    log.info(f"Screenshot saved at : {screenshot_path}")
-
-    extracted_text = extract_text_from_screenshot(screenshot_path)
-    log.debug(f"OCR Text:\n{extracted_text}")
+    experience = ""
+    pyautogui.moveTo(600, 600)
+    experience_location = scroll_until_image_section_found("./resources/experience.png")
+    scroll_until_image_section_disappears("./resources/experience.png") # workaround for mismatch coordinates
+    if experience_location:
+        region = (218, 690, 800, 150)
+        screenshot = pyautogui.screenshot(region=region)
+        experience_screenshot_path = os.path.join(screenshot_dir, "experience_screenshot.png")
+        screenshot.save(experience_screenshot_path)
+        extracted_text = extract_text_from_screenshot(experience_screenshot_path)
+        lines = extracted_text.split('\n')
+        if lines[0].strip().lower() == "experience":
+            lines = lines[1:]
+        if lines and "show all" in lines[-1].strip().lower():
+            lines = lines[:-1]
+        experience = '\n'.join(lines)
 
     name = username
-    about = ""
-    experience = ""
-
-    for line in extracted_text.splitlines():
-        if "subscribers" in line.lower():
-            experience += line.strip() + " "
-        elif "videos" in line.lower():
-            experience += line.strip()
-        elif not about and len(line.strip()) > 30:
-            about = line.strip()
 
     return {
         "username": name,

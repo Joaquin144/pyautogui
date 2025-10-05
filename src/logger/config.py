@@ -18,21 +18,21 @@ def setup_logger(name: str = 'app') -> logging.Logger:
     logger.setLevel(logging.DEBUG)
 
     # info logs handler
-    info_handler = logging.FileHandler('./logs/app.log')
-    info_handler.setLevel(logging.INFO)
-    info_handler.setFormatter(default_formatter)
-    info_handler.addFilter(SingleLevelFilter(logging.INFO))
+    # info_handler = logging.FileHandler('./logs/app.log')
+    # info_handler.setLevel(logging.INFO)
+    # info_handler.setFormatter(default_formatter)
+    # info_handler.addFilter(SingleLevelFilter(logging.INFO))
 
     # error logs handler
-    error_handler = logging.FileHandler('./logs/app-error.log')
-    error_handler.setLevel(logging.ERROR)
-    error_handler.setFormatter(default_formatter)
-    error_handler.addFilter(SingleLevelFilter(logging.ERROR))
+    # error_handler = logging.FileHandler('./logs/app-error.log')
+    # error_handler.setLevel(logging.ERROR)
+    # error_handler.setFormatter(default_formatter)
+    # error_handler.addFilter(SingleLevelFilter(logging.ERROR))
 
     # debug handler
-    debug_handler = logging.FileHandler('./logs/app-debug.log')
-    debug_handler.setLevel(logging.DEBUG)
-    debug_handler.setFormatter(level_formatter)
+    # debug_handler = logging.FileHandler('./logs/app-debug.log')
+    # debug_handler.setLevel(logging.DEBUG)
+    # debug_handler.setFormatter(level_formatter)
     # debug_handler.addFilter(SingleLevelFilter(logging.DEBUG)) Allow every level to come in here
 
     # for console logs
@@ -42,8 +42,8 @@ def setup_logger(name: str = 'app') -> logging.Logger:
 
     if not logger.handlers:
         logger.addHandler(console_handler)
-        logger.addHandler(info_handler)
-        logger.addHandler(error_handler)
-        logger.addHandler(debug_handler)
+        # logger.addHandler(info_handler)
+        # logger.addHandler(error_handler)
+        # logger.addHandler(debug_handler)
 
     return logger

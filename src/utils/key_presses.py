@@ -12,10 +12,14 @@ def focus_address_bar():
         os_name = platform.system().lower()
         if "darwin" in os_name or "mac" in os_name:
             log.debug("Attempting to focus address bar on macOS")
-            pyautogui.hotkey("command", "l")
+            pyautogui.keyDown('command')
+            pyautogui.press('l')
+            pyautogui.keyUp('command')
         else:
             log.debug("Attempting to focus address bar on other OS")
-            pyautogui.hotkey("ctrl", "l")
+            pyautogui.keyDown('ctrl')
+            pyautogui.press('l')
+            pyautogui.keyUp('command')
     except Exception as e:
         log.error(f"Failed to focus address bar: {e}")
         raise ValueError('Failed to focus address bar')

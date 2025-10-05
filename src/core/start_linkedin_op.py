@@ -52,6 +52,6 @@ def read_usernames() -> list[str]:
 
 
 def generate_search_url_for_username(username: str) -> str:
-    result_url = app_constants.base_url_search_prefix + username
+    result_url = app_constants.base_url_search_prefix + username + "/"
     log.debug(f"generated url for : {username} is : {result_url}")
     return result_url

@@ -9,8 +9,8 @@ load_dotenv()
 
 log.info("Application started")
 
-username = os.getenv("LINKEDIN_EMAIL")
-log.info(f"Application running with credentials for : {username}")
+userEmail = os.getenv("LINKEDIN_EMAIL")
+log.info(f"Application running with credentials for : {userEmail}")
 
 run_linkedin_op()
 
