@@ -16,16 +16,15 @@ def extract_profile_info(username: str, file_name: str) -> dict:
     screenshot_dir = f"./temp_screenshots/{username}"
     os.makedirs(screenshot_dir, exist_ok=True)
 
-    screenshot_path = os.path.join(screenshot_dir, file_name)
-
     time.sleep(3)
     pyautogui.moveTo(600, 600)
     about_location = scroll_until_image_section_found("./resources/about.png")  # Scroll down to load the About section
+    scroll_until_image_section_disappears("./resources/about.png")
     about = ""
     if about_location:
         # region = (about_location[0] - 100, about_location[1] - 50, about_location[0] + 600, about_location[1] + 250)
         # left, top, width, height
-        region = (218, 690, 800, 150)
+        region = (220, 230, 780, 150)
         screenshot = pyautogui.screenshot(region=region)
         about_screenshot_path = os.path.join(screenshot_dir, "about_screenshot.png")
         screenshot.save(about_screenshot_path)
@@ -42,7 +41,7 @@ def extract_profile_info(username: str, file_name: str) -> dict:
     experience_location = scroll_until_image_section_found("./resources/experience.png")
     scroll_until_image_section_disappears("./resources/experience.png") # workaround for mismatch coordinates
     if experience_location:
-        region = (218, 690, 800, 150)
+        region = (218, 230, 800, 350)
         screenshot = pyautogui.screenshot(region=region)
         experience_screenshot_path = os.path.join(screenshot_dir, "experience_screenshot.png")
         screenshot.save(experience_screenshot_path)
