@@ -4,7 +4,7 @@ import webbrowser
 import pyautogui
 
 from src.core.extract_profile_info import extract_profile_info
-from src.core.handle_login import handle_login
+from src.core.handle_login import handle_login_with_image, handle_login_with_coordinates
 from src.core.save_to_excel import save_to_excel
 from src.logger.config import setup_logger
 from src.utils import app_constants
@@ -16,8 +16,7 @@ input_file_path = './data/input/usernames.txt'
 
 def run_linkedin_op():
     open_linkedin()
-    # todo : Login into LinkedIn and wait till success
-    handle_login()
+    handle_login_with_coordinates()
 
     usernames = read_usernames()
     extracted_profile_data = []

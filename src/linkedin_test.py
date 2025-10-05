@@ -2,7 +2,7 @@ import pyautogui
 from dotenv import load_dotenv
 
 from src.core.extract_profile_info import extract_profile_info
-from src.core.handle_login import handle_login
+from src.core.handle_login import handle_login_with_image
 from src.core.start_linkedin_op import generate_search_url_for_username, open_linkedin
 from src.logger.config import setup_logger
 from src.utils.key_presses import focus_address_bar
