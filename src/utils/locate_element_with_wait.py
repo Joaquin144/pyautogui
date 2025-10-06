@@ -7,7 +7,7 @@ from src.logger.config import setup_logger
 log = setup_logger("locate_element_with_wait")
 
 
-def locate_element_with_wait(image_path: str, confidence=0.8, timeout_seconds=10, wait_time=0.5):
+def locate_element_with_wait(image_path: str, confidence=0.8, timeout_seconds=5, wait_time=0.5):
     start_time = time.time()
     while time.time() - start_time < timeout_seconds:
         try:
