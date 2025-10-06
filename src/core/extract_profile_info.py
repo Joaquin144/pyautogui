@@ -30,10 +30,10 @@ def extract_profile_info(username: str, file_name: str) -> dict:
     full_name = extract_first_name_prefix(lines[0]) if len(lines) > 0 else ""
     log.info(f"Full name for {username} is {full_name}")
 
-
-    pyautogui.moveTo(600, 600)
+    time.sleep(0.5)
+    scroll_to_top()
     about_location = scroll_until_image_section_found("./resources/about.png")  # Scroll down to load the About section
-    handle_see_more()
+    # handle_see_more()
     scroll_until_image_section_disappears("./resources/about.png")
     about = ""
     if about_location:
