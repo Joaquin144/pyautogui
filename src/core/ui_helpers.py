@@ -6,10 +6,12 @@ import pyautogui
 import string
 import re
 
+from src.utils.locate_element_with_wait import locate_element_with_wait
+
 log = setup_logger("ui_helpers")
 
 
-def scroll_until_image_section_found(image_path: str, max_scrolls=20):
+def scroll_until_image_section_found(image_path: str, max_scrolls=40):
     log.info("Scroll until image section found")
     scroll_attempts = 0
 
@@ -25,11 +27,11 @@ def scroll_until_image_section_found(image_path: str, max_scrolls=20):
                 log.info("Could not find the 'Image' section. Scrolling down...")
 
             # Scroll down if not found
-            pyautogui.scroll(-10)
+            pyautogui.scroll(-5)
             scroll_attempts += 1
         except pyautogui.ImageNotFoundException as e:
             log.error(f"Image not found: {e}")
-            pyautogui.scroll(-10)
+            pyautogui.scroll(-5)
             scroll_attempts += 1
             continue
         except Exception as e:
@@ -55,7 +57,7 @@ def scroll_until_image_section_disappears(image_path: str, max_scrolls=40):
                 scroll_attempts += 1
                 continue
             else:
-                pyautogui.scroll(1)
+                pyautogui.scroll(2)
                 scroll_attempts += 1
                 return None
 
@@ -122,3 +124,17 @@ def extract_first_name_prefix(ocr_line: str,
 def find_image_and_click_on_it(img_path: str):
     log.info(f"Finding and clicking on image : {img_path} .")
     # todo : Implementation
+
+
+def get_end_of_about_region():
+    activity_region = locate_element_with_wait('./resources/activity.png', timeout_seconds=0.6)
+    top_skills_region = locate_element_with_wait('./resources/top_skills.png', timeout_seconds=0.6)
+    featured_region = locate_element_with_wait('./resources/featured.png', timeout_seconds=0.6)
+    regions = [r for r in [activity_region, top_skills_region, featured_region] if r is not None]
+
+    if not regions:
+        return None
+
+    # Return the one with the least .y value
+    end_region = min(regions, key=lambda r: r.y)
+    return end_region
