@@ -19,6 +19,5 @@ def locate_element_with_wait(image_path: str, confidence=0.8, timeout_seconds=5,
             time.sleep(wait_time)
         except pyautogui.ImageNotFoundException as e:
             log.error(f"Image not found : {e}")
-            pyautogui.scroll(-10)
             continue
     return None
