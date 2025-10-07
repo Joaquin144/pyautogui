@@ -4,6 +4,7 @@ import time
 import pyautogui
 
 from src.core.extract_text_from_screenshot import extract_text_from_screenshot
+from src.core.generate_ai_insights import generate_ai_insights
 from src.core.ui_helpers import scroll_until_image_section_found, scroll_until_image_section_disappears, scroll_to_top, \
     extract_first_name_prefix, get_end_of_about_region
 from src.logger.config import setup_logger
@@ -75,11 +76,14 @@ def extract_profile_info(username: str, file_name: str) -> dict:
 
     linkedin_username = username
 
+    ai_insights = generate_ai_insights(about)
+
     return {
         "name": full_name,
         "username": linkedin_username,
         "about": about,
-        "experience": experience.strip()
+        "experience": experience.strip(),
+        "ai_insights": ai_insights
     }
 
 
