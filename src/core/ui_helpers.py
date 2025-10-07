@@ -40,7 +40,7 @@ def scroll_until_image_section_found(image_path: str, max_scrolls=20):
     return None
 
 
-def scroll_until_image_section_disappears(image_path: str, max_scrolls=20):
+def scroll_until_image_section_disappears(image_path: str, max_scrolls=40):
     log.info("Scroll until image section disappears")
     scroll_attempts = 0
 
@@ -51,17 +51,17 @@ def scroll_until_image_section_disappears(image_path: str, max_scrolls=20):
             location = pyautogui.locateOnScreen(image_path, confidence=0.8)
             if location:
                 log.info(f"Found the 'Image' scrolling again {location}")
-                pyautogui.scroll(-2)
+                pyautogui.scroll(-1)
                 scroll_attempts += 1
                 continue
             else:
-                pyautogui.scroll(2)
+                pyautogui.scroll(1)
                 scroll_attempts += 1
                 return None
 
         except pyautogui.ImageNotFoundException as e:
             log.error(f"Image not found: {e}")
-            pyautogui.scroll(2)
+            pyautogui.scroll(1)
             scroll_attempts += 1
             return None
         except Exception as e:
@@ -117,3 +117,8 @@ def extract_first_name_prefix(ocr_line: str,
     prefix = prefix.strip(" -.'")
 
     return prefix
+
+
+def find_image_and_click_on_it(img_path: str):
+    log.info(f"Finding and clicking on image : {img_path} .")
+    # todo : Implementation

@@ -80,12 +80,13 @@ def extract_profile_info(username: str, file_name: str) -> dict:
     }
 
 def handle_see_more():
-    time.sleep(0.5)
-    see_more_location = locate_element_with_wait("./resources/see_more.png", timeout_seconds=1)
+    see_more_location = locate_element_with_wait("./resources/see_more.png", timeout_seconds=1, confidence=0.85)
     time.sleep(0.5)
     if see_more_location is not None:
-        pyautogui.moveTo(600, 600)
-        pyautogui.click(see_more_location)
+        log.info(f"SeeMore : {see_more_location}")
+        pyautogui.moveTo(see_more_location.x / 2, see_more_location.y /2)
+        time.sleep(0.5)
+        pyautogui.click(x=see_more_location.x/2, y=see_more_location.y/2)
         log.info("clicked on see more")
     else:
         log.info("see more not found")
