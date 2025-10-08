@@ -8,6 +8,8 @@ log = setup_logger("generate_ai_insights")
 
 
 def generate_ai_insights(content: str) -> str:
+    if content == "":
+        return "Let the work do the talking — a profile worth checking out."
     try:
         prompt = f"""
         You are a kind and loving AI assistant that extracts useful information from LinkedIn "About" section. Ignore spelling mistakes be lenient
@@ -34,3 +36,12 @@ Return only the JSON.
     except Exception as e:
         log.error("Failed to generate AI Insights", e)
         return ""
+
+
+# print(generate_ai_insights(""))
+#
+# print(generate_ai_insights("""
+# Experienced in building modern Software systems at scale. Demonstrated history of working in the industry to drive
+# high-growth engineering teams. Strong engineering professional with Bachelor of Technology (B.Tech.) focused in
+# Computer Science from National Institute of Technology Jamshedpur.
+# """))
